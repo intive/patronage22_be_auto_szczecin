@@ -10,7 +10,7 @@ public class Endpoints {
 
     @BeforeClass
     public static void setupURI() {
-        RestAssured.baseURI = "https://patronage22-szczecin-java.herokuapp.com/";
+        RestAssured.baseURI = "https://intive-java-szczecin-2022.herokuapp.com/";
         RestAssured.basePath = "api/";
     }
 }
