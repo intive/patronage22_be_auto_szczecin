@@ -2,7 +2,6 @@ package com.patronage.backend.boards;
 
 import com.patronage.backend.Endpoints;
 import com.patronage.backend.auth.BaseAuthTest;
-import io.restassured.specification.RequestSpecification;
 import org.apache.http.HttpStatus;
 import org.junit.Test;
 
@@ -13,7 +12,7 @@ import static org.hamcrest.Matchers.notNullValue;
 public class BoardsTest extends BaseAuthTest {
 
     private static final String VALID_BOARD_NAME = "board name";
-    private static final String VALID_BOARD_REQUEST_BODY = "{\"name\": \"" + VALID_BOARD_NAME + "\"}";
+    private static final String VALID_BOARD_REQUEST_BODY = String.format("{\"name\": \"%s\"}", VALID_BOARD_NAME);
 
     @Test
     public void getBoardsWithAuthorizationShouldReturnStatusCode200() {
