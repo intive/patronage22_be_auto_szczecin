@@ -15,14 +15,6 @@ public class BoardsTest extends BaseAuthTest {
     private static final String VALID_BOARD_NAME = "board name";
     private static final String VALID_BOARD_REQUEST_BODY = "{\"name\": \"" + VALID_BOARD_NAME + "\"}";
 
-    public RequestSpecification givenBodyJson(String json) {
-        return given().header("Content-Type", "application/json").body(json);
-    }
-
-    public RequestSpecification givenBodyJson(RequestSpecification requestSpecification, String json) {
-        return requestSpecification.header("Content-Type", "application/json").body(json);
-    }
-
     @Test
     public void getBoardsWithAuthorizationShouldReturnStatusCode200() {
         givenAuthorized()
