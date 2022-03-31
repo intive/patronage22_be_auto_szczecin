@@ -1,9 +1,13 @@
 package com.patronage.backend.boards;
 
+import com.google.gson.JsonObject;
 import com.patronage.backend.Endpoints;
 import com.patronage.backend.auth.BaseAuthTest;
+import io.restassured.response.ResponseBody;
 import org.apache.http.HttpStatus;
 import org.junit.Test;
+
+import java.util.Map;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
@@ -14,7 +18,7 @@ public class BoardsTest extends BaseAuthTest {
     private static final String VALID_BOARD_NAME = "board name";
     private static final String VALID_BOARD_REQUEST_BODY = String.format("{\"name\": \"%s\"}", VALID_BOARD_NAME);
 
-    @Test
+    /*@Test
     public void getBoardsWithAuthorizationShouldReturnStatusCode200() {
         givenAuthorized()
                 .when().get(Endpoints.BOARDS)
@@ -70,5 +74,15 @@ public class BoardsTest extends BaseAuthTest {
         givenBodyJson(givenAuthorized(), "{\"name\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit molestie.\"}")
                 .when().post(Endpoints.BOARDS)
                 .then().statusCode(HttpStatus.SC_BAD_REQUEST);
+    }*/
+
+    public ResponseBody getBoardsOfUserJson() {
+        return givenAuthorized()
+                .when().get(Endpoints.BOARDS).getBody().prettyPeek();
+    }
+
+    @Test
+    public void getBoardsOfUser() {
+        System.out.println(getBoardsOfUserJson() + "\n\n\n");
     }
 }
