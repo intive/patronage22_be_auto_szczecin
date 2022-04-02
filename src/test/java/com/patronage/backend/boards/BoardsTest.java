@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 import static io.restassured.RestAssured.given;
+import static io.restassured.RestAssured.when;
 import static org.hamcrest.Matchers.notNullValue;
 
 public class BoardsTest extends BaseAuthTest {
@@ -138,8 +139,30 @@ public class BoardsTest extends BaseAuthTest {
 
     @Test
     public void printBoards() {
+        int id = 0;
         System.out.println("Board: " + getBoard().keySet());
-        System.out.println("Column: " + getColumns().get(0).keySet());
-        System.out.println("User: " + getUsers().get(0).keySet());
+        System.out.println("Column: " + getColumns().get(id).keySet());
+        System.out.println("User: " + getUsers().get(id).keySet());
     }
+
+    @Test
+    public void checkBoardKeys() {
+        List<String> boardKeys = new ArrayList<>();
+        boardKeys.add("id");
+        boardKeys.add("state");
+        boardKeys.add("name");
+        boardKeys.add("numberOfVotes");
+
+        System.out.println(boardKeys);
+        System.out.println(getBoard().keySet());
+
+
+    }
+
+    //@Test //board details
+    /*public void checkBoardDetailsKeys() {
+        for (int i = 0; i < getBoardsIdOfUser().size(); i++) {
+
+        }
+    }*/
 }
