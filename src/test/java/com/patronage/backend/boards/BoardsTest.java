@@ -3,14 +3,15 @@ package com.patronage.backend.boards;
 import com.google.gson.JsonObject;
 import com.patronage.backend.Endpoints;
 import com.patronage.backend.auth.BaseAuthTest;
-import io.restassured.response.ResponseBody;
-import org.apache.http.HttpStatus;
+import io.restassured.path.json.JsonPath;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 
 public class BoardsTest extends BaseAuthTest {
@@ -76,13 +77,69 @@ public class BoardsTest extends BaseAuthTest {
                 .then().statusCode(HttpStatus.SC_BAD_REQUEST);
     }*/
 
-    public ResponseBody getBoardsOfUserJson() {
+    /*public ResponseBody getBoardsOfUserJson() {
         return givenAuthorized()
                 .when().get(Endpoints.BOARDS).getBody().prettyPeek();
+    }*/
+
+    public JsonPath getBoardsOfUserJsonPath() {
+        return givenAuthorized()
+                .when().get(Endpoints.BOARDS).jsonPath();
+    }
+
+    public List<Integer> getBoardsIdOfUser() {
+        return getBoardsOfUserJsonPath().getJsonObject("id");
+    }
+
+    public List<String> getBoardsStateOfUser() {
+        return getBoardsOfUserJsonPath().getJsonObject("state");
     }
 
     @Test
-    public void getBoardsOfUser() {
-        System.out.println(getBoardsOfUserJson() + "\n\n\n");
+    public void getBoardData() {
+        System.out.println(getBoardsIdOfUser());
+        System.out.println(getBoardsStateOfUser());
+
+        /*for (int id : getBoardsIdOfUser()) {
+            System.out.println(givenAuthorized()
+                    .when().get(Endpoints.BOARDS + id).getBody().peek());
+        }*/
+    }
+
+    public JsonPath getBoardJsonPath(int id) {
+        return givenAuthorized()
+                .when().get(Endpoints.BOARDS + id).jsonPath();
+    }
+
+    public JsonPath getBoardDetailsJsonPath() {
+        int id = 108;
+
+        return givenAuthorized()
+                .when().get(Endpoints.BOARDS + id + "/details").jsonPath();
+    }
+
+    public Map<String, String> getBoard() {
+        return getBoardJsonPath(109).getJsonObject("board");
+    }
+
+    public ArrayList<Map<String, String>> getColumns() {
+        return getBoardJsonPath(109).getJsonObject("columns");
+    }
+
+    public ArrayList<Map<String, String>> getUsers() {
+        return getBoardJsonPath(109).getJsonObject("users");
+    }
+
+    public void printBoard() {
+        System.out.println("Board: " + getBoard());
+        System.out.println("Columns: " + getColumns());
+        System.out.println("Users: " + getUsers());
+    }
+
+    @Test
+    public void printBoards() {
+        System.out.println("Board: " + getBoard().keySet());
+        System.out.println("Column: " + getColumns().get(0).keySet());
+        System.out.println("User: " + getUsers().get(0).keySet());
     }
 }
